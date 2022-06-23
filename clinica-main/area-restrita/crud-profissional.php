@@ -41,7 +41,7 @@
             <a href="../index.php" target=""> 
               <img width="50" height="50" class="favicon-sidebar" src="..//assets//img//favicon.png" alt="Black Icon"> 
             </a>
-              <a href="restrito.php"><span class="logo_name">ADMIN</span></a>
+            <a class="logo_object" href="restrito.php"><span class="logo_name">ADMIN</span></a>
             </div>
             <ul class="nav-links">
                 <li>
@@ -77,6 +77,8 @@
         <section class="home-section">
           <div class="home-content">
               <i class="bx bx-menu"></i>
+              <!-- Colocar a tabela aqui caso de ruim na formatação do layout -->
+          </div>
               <!-- Colocar a tabela aqui caso de ruim na formatação do layout -->
           </div>
           <div class="col-8 get-margin">

@@ -326,13 +326,6 @@
                         </div>
                     </a>
                 </li>
-                <li>
-                    <a href="#laravel" role="tab" data-toggle="tab">
-                        <div class="image-clients">
-                            <img alt="..." class="img-circle" src="assets/img/laravel.jpg"/>
-                        </div>
-                    </a>
-                </li>
             </ul>
 
 
@@ -356,11 +349,6 @@
                 <div class="tab-pane" id="css">
                     <p class="description"> 
                         Tecnologia utilizada no desenvolvimento da estilização do nosso site
-                    </p>
-                </div>
-                <div class="tab-pane" id="laravel">
-                    <p class="description"> 
-                        Framework de PHP utilizado como plataforma de desenvolvimento PHP pro nosso back-end
                     </p>
                 </div>
 

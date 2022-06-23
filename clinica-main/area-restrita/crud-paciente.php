@@ -42,7 +42,7 @@
             <a href="../index.php" target=""> 
               <img width="50" height="50" class="favicon-sidebar" src="..//assets//img//favicon.png" alt="Black Icon"> 
             </a>
-              <a href="restrito.php"><span class="logo_name">ADMIN</span></a>
+            <a class="logo_object" href="restrito.php"><span class="logo_name">ADMIN</span></a>
             </div>
             <ul class="nav-links">
                 <li>
@@ -80,6 +80,8 @@
               <i class="bx bx-menu"></i>
               <!-- Colocar a tabela aqui caso de ruim na formatação do layout -->
           </div>
+              <!-- Colocar a tabela aqui caso de ruim na formatação do layout -->
+          </div>
           <div class="col-11 get-margin">
           <h1 style="margin: 5px auto 10px auto;">Pacientes</h1>
           <table style="margin: auto auto auto auto;" class="table get-margin">
@@ -97,7 +99,6 @@
               </tr>
             </thead>
             <tbody>
-            
               <?php foreach ($listapaciente as $lista) { ?>
                 <tr>
                   <th scope="row"><?php echo $lista ['idPaciente'] ?></th>

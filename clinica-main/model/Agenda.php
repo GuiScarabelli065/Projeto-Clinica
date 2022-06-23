@@ -29,29 +29,29 @@
         public function setHoraAgenda($horaagenda){
             $this->horaagenda = $horaagenda;
         }
-        public function getPaciente(){
-            return $this->paciente;
+        public function getIdPaciente(){
+            return $this->Idpaciente;
         }
-        public function setPaciente($paciente){
-            $this->paciente = $paciente;
+        public function setIdPaciente($paciente){
+            $this->Idpaciente = $paciente;
         }
-        public function getProfissional(){
-            return $this->profissional;
+        public function getIdProfissional(){
+            return $this->Idprofissional;
         }
-        public function setProfissional($profissional){
-            $this->profissional = $profissional;
+        public function setIdProfissional($profissional){
+            $this->Idprofissional = $profissional;
         }
 
         public function cadastrar($agenda){
             $conexao = Conexao::conectar();
 
             $stmt = $conexao->prepare("INSERT INTO tbagenda(dtagenda, horaagenda,
-                            idpaciente, idprofissional) VALUES(?, ?, ?, ?)");
+                            idPaciente, idProfissional) VALUES(?, ?, ?, ?)");
 
             $stmt->bindValue(1, $agenda->getDtAgenda());
             $stmt->bindValue(2, $agenda->getHoraAgenda());
-            $stmt->bindValue(3, $agenda->getPaciente()->getIdPaciente());
-            $stmt->bindValue(4, $agenda->getProfissional()->getIdProfissional());
+            $stmt->bindValue(3, $agenda->getIdPaciente());
+            $stmt->bindValue(4, $agenda->getIdProfissional());
             
             $stmt->execute();
         }
@@ -59,12 +59,23 @@
         public function listar(){
             $conexao = Conexao::conectar();
             $querySelect = "SELECT idagenda, dtagenda, horaagenda, 
-                            nomepaciente, nomeprofissional FROM tbagenda
-                            -- INNER JOIN tbPaciente ON tbpaciente.idpaciente = tbagenda.idpaciente
-                            -- INNER JOIN tbprofissional ON tbprofissional.idprofissional = tbagenda.idprofissional";
+                            nomePaciente, nomeProfissional FROM tbagenda
+                             INNER JOIN tbPaciente ON tbPaciente.idPaciente = tbagenda.idPaciente
+                             INNER JOIN tbProfissional ON tbProfissional.idProfissional = tbagenda.idProfissional";
             $resultado = $conexao->query($querySelect);
             $lista_agenda = $resultado->fetchAll();
             return $lista_agenda;   
+        }
+
+        // Função para pegar a data e hora da agenda
+
+        public function data_agenda (){
+             
+            $conexao = Conexao::conectar();
+            $querySelect = "SELECT dtagenda, horaagenda FROM tbagenda";
+            $resultado = $conexao -> query ($querySelect);
+            $data_agenda = $resultado -> fetchAll();
+            return $data_agenda;
         }
 
 }

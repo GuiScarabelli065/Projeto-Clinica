@@ -115,6 +115,18 @@
             return  $resultado;
         }
 
+        // Função para pegar o email do paciente
+
+        public function emailPaciente (){
+             
+            $conexao = Conexao::conectar();
+            $querySelect = "SELECT idPaciente, emailPaciente FROM tbPaciente";
+            $resultado = $conexao -> query ($querySelect);
+            $email_paciente = $resultado -> fetchAll();
+            return $email_paciente;
+        }
+
+
 
     }
 ?>

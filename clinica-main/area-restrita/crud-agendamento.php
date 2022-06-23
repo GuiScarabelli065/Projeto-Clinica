@@ -27,15 +27,18 @@
     </head>
     <body>
     <?php
+
+            require_once("../model/Agenda.php");
             require_once("../model/Paciente.php");
-            require_once("../model/Profissional.php");
             try {
                 $paciente = new Paciente();
                 $profissional = new Profissional();
+                $agenda = new Agenda ();
 
 
                 $listaprofissional = $profissional -> listar ();
-                $listapaciente = $paciente->listar();
+                $listapaciente = $paciente-> listar();
+                $lista_agenda = $agenda-> listar();
 
 
             } catch(Exception $e) {
@@ -48,7 +51,7 @@
             <a href="../index.php" target=""> 
               <img width="50" height="50" class="favicon-sidebar" src="..//assets//img//favicon.png" alt="Black Icon"> 
             </a>
-                <a href="restrito.php"><span class="logo_name">ADMIN</span></a>
+            <a class="logo_object" href="restrito.php"><span class="logo_name">ADMIN</span></a>
             </div>
             <ul class="nav-links">
                 <li>
@@ -81,6 +84,17 @@
                 </li>
             </ul>
         </div>
+              <!-- Colocar a tabela aqui caso de ruim na formatação do layout -->
+          </div>
+                </li>
+                <li>
+                    <a href="../logout.php">
+                        <i class='bx bx-log-out'></i>
+                        <span class="link_name"> Sair</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
         <section class="home-section">
           <div class="home-content">
               <i class="bx bx-menu"></i>
@@ -91,49 +105,49 @@
           <table style="margin: auto auto auto auto;" class="table get-margin">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Action</th>
+                <th scope="col">Id consulta</th>
+                <th scope="col">Data da consulta</th>
+                <th scope="col">Hora</th>
+                <th scope="col">Profissional</th>
+                <th scope="col">Paciente</th>
+                <th scope="col">Açoes</th>           
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>123</td>
-                <td>Athirsoles cria da Etec</td>
-                <td>
-                  <button type="button" class="btn btn-success">Editar</button>
-                  <button type="button" class="btn btn-danger">Excluir</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>456</td>
-                <td>Caicores do grau</td>
-                <td>
-                  <button type="button" class="btn btn-success">Editar</button>
-                  <button type="button" class="btn btn-danger">Excluir</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>789</td>
-                <td>Pequenos óculos</td>
-                <td>
-                  <button type="button" class="btn btn-success">Editar</button>
-                  <button type="button" class="btn btn-danger">Excluir</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>000</td>
-                <td>Glaubolinos bódi biuder</td>
-                <td>
-                  <button type="button" class="btn btn-success">Editar</button>
-                  <button type="button" class="btn btn-danger">Excluir</button>
-                </td>
-              </tr>
+              <?php foreach ($lista_agenda as $lista) { ?>
+                <tr>
+                  <th scope="row"><?php echo $lista ['idagenda'] ?></th>
+                    <td><?php echo $lista ['dtagenda'] ?></td>
+                    <td><?php echo $lista ['horaagenda'] ?></td> 
+                    <td><?php echo $lista ['nomeProfissional'] ?></td>
+                    <td><?php echo $lista ['nomePaciente'] ?></td>
+                  <td>
+                    <button type="button" class="btn btn-success">Editar</button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $lista ['idagenda'] ?>">
+                      Excluir
+                    </button>
+                  </td>
+                  <form method="post" action="../controller/delete-Paciente.php">
+                    <div class="modal fade" id="ModalDelete<?php echo $lista ['idAgenda'] ?>" tabindex="-1" aria-labelledby="ModalDelete<?php echo $lista ['idAgenda'] ?>" aria-hidden="true">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Deletar <?php echo $lista ['idAgenda'] ?></h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              Deseja mesmo deletar a loja <?php echo $lista ['idAgenda'] ?>?
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                              <button type="submit" name="txtId" id="txtId" value="<?php echo $lista['idAgenda'] ?>" class="btn btn-outline-danger">Deletar</button>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                </tr>
+                  <?php }?>
             </tbody>
           </table>
           <button style="margin: 10px auto auto auto; float: right;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Cadastrar</button>
@@ -148,23 +162,28 @@
             </div>
             <div class="modal-body">
 
-            <form action="../controller/cadastra-agenda" method="POST">
+            <form action="../controller/cadastra-agenda.php" method="POST">
               <div class="mb-3"> 
                 <br>
+                
                 <label>Selecione o Paciente</label>
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                  <?php foreach ($listapaciente as $linha){ ?>
-                  <option value="<?php echo $linha['idPaciente'] ?>">
-                    <?php echo $linha['nomePaciente'] ?>
-                  </option>
-                <?php } ?>
+                  <select class="form-select" aria-label="Default select example" name="paciente">
+                    <option selected>Open this select menu</option>
+                      <?php 
+                      foreach ($listapaciente as $linha){ 
+                      ?>
+                        <option value="<?php echo $linha['idPaciente'] ?>">
+                          <?php echo $linha['nomePaciente'] ?>
+                        </option>
+                      <?php 
+                      } 
+                      ?>
 
-              </select>
-              <br>
+                  </select>
+                  <br>
 
               <label>Selecione o Profissional</label>
-              <select class="form-select" aria-label="Default select example">
+              <select class="form-select" aria-label="Default select example" name="profissional">
                   <?php foreach ($listaprofissional as $linha){ ?>
                       <option value="<?php echo $linha['idProfissional'] ?>">
                           <?php echo $linha['nomeProfissional'] ?>
@@ -172,7 +191,7 @@
                   <?php } ?>
               </select>
               <br>
-
+              
               <label>Data: </label>
                 <input type="date" name="txtData">
             </div>
@@ -184,11 +203,15 @@
               <!-- <input type="submit" value="Cadastrar"> -->
               
 
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                
+                <input type="submit" value="Cadastrar">
             </form>
               
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <!---
               <button type="submit" class="btn btn-primary">Cadastrar</button>
+              -->
             </div>
             </form>
 
