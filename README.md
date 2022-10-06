@@ -1,2 +1,2 @@
 # Projeto-Clinica
-Projeto feito para entrega de final de semestre do curso técnico de desenvolvimento de sistemas. 
+Projeto feito para nota do componente de programação web para final de semestre . 
